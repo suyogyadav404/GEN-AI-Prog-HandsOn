@@ -1,0 +1,93 @@
+ 
+Day3 Hands-on Practice Tasks – LangGraph Pipelines and Routing 
+Please complete the following hands-on tasks based on the concepts covered in the sessions. 
+ 
+Hands-on Task 1: Extend the Basic Pipeline (No LLM) 
+Objective 
+Enhance an existing pipeline by adding one more processing step. 
+Task 
+Introduce a new node called word_count with the following functionality: 
+Count the number of words in the input text	 
+Store the result in a new state field: 
+word_count: int 
+Update the pipeline flow as follows: 
+START → count → word_count → summarise → END 
+Modify the make_summary node so that the final output includes both: 
+Character count 
+Word count 
+Expected Output 
+Summary: 'LangGraph makes stateful AI workflows easy!' — 43 characters, 6 words. 
+Skills Tested 
+Extending TypedDict state 
+Adding and connecting new nodes 
+Passing state across nodes 
+Using add_edge 
+ 
+Hands-on Task 2: Build a Review Pipeline with Claude 
+Objective 
+Create a multi-step LLM pipeline with sequential processing. 
+Task 
+Define a state structure: 
+class ReviewState(TypedDict): 
+    product: str 
+    review: str 
+    sentiment: str 
+    reply: str 
+`` 
+Build the following pipeline: 
+START → review_node → sentiment_node → reply_node → END 
+Node Requirements 
+1. review_node 
+Generate a short product review using Claude 
+2. sentiment_node 
+Classify the review into:  
+Positive 
+Negative 
+Neutral 
+3. reply_node 
+Generate a one-line brand response based on the sentiment 
+Test Input 
+product = "wireless noise-cancelling headphones" 
+Skills Tested 
+Chaining multiple LLM steps 
+State management across nodes 
+Prompt design for generation and classification 
+Using Claude in graph-based workflows 
+ 
+Hands-on Task 3: Three-Way Conditional Router 
+Objective 
+Implement a routing system with multiple decision branches. 
+Task 
+Create a router that classifies user questions into: 
+science 
+history 
+general 
+Based on this classification, route the input to one of three nodes: 
+science_node 
+history_node 
+general_node 
+`` 
+Node Behavior 
+science_node → Respond as a science teacher 
+history_node → Respond as a historian 
+general_node → Respond as a general assistant 
+Routing Requirement 
+The routing function must return: 
+Literal["science_node", "history_node", "general_node"] 
+Testing Requirement 
+Test with at least 4 questions, ensuring all categories are covered. 
+Skills Tested 
+Using add_conditional_edges 
+Implementing multi-branch routing 
+Applying Literal type hints 
+Designing persona-based responses 
+ 
+Expected Outcome 
+By completing these tasks, you will be able to: 
+Extend pipeline state using TypedDict 
+Design multi-node workflows 
+Build LLM-powered pipelines 
+Route inputs dynamically across multiple branches 
+Apply persona-based response strategies 
+ 
+ 

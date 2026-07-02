@@ -1,7 +1,4 @@
-# Ignore all environment secret files
 .env
 **/.env
- 
-# Ignore all Python virtual environments
 venv/
 **/venv/
