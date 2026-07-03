@@ -2,3 +2,6 @@
 **/.env
 venv/
 **/venv/
+# Ignore Mac system files
+.DS_Store
+**/.DS_Store
