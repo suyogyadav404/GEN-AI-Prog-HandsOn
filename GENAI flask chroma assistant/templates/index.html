@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenAI Knowledge Assistant</title>
+    <link rel="stylesheet" href="{{ url_url_for('static', filename='style.css') if id else '/static/style.css' }}">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>GenAI Knowledge Assistant</h1>
+            <p class="subtitle">Flask + ChromaDB RAG Framework</p>
+        </header>
+
+        <main>
+            <section class="form-section">
+                <form action="/ask" method="POST">
+                    <div class="form-group">
+                        <label for="question">Ask a question about GenAI Foundation Training:</label>
+                        <textarea id="question" name="question" rows="3" placeholder="e.g., What is the role of embeddings in GenAI?" required>{{ question if question }}</textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Submit Query</button>
+                </form>
+            </section>
+
+            {% if error %}
+            <section class="error-container">
+                <div class="error-box">
+                    <strong>System Error Encountered:</strong> {{ error }}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if response or context_chunks %}
+            <section class="results-container">
+                
+                {% if question %}
+                <div class="result-block user-query">
+                    <h3><strong>Question:</strong></h3>
+                    <p>{{ question }}</p>
+                </div>
+                {% endif %}
+
+                {% if context_chunks %}
+                <div class="result-block context-retrieval">
+                    <h3><strong>Retrieved Context (Chroma VectorDB Knowledge Chunks):</strong></h3>
+                    <ul>
+                        {% for chunk in context_chunks %}
+                        <li>
+                            <p class="chunk-text">"{{ chunk.text }}"</p>
+                            <span class="metric-tag">Distance Metric (L2): <strong>{{ chunk.distance | round(4) }}</strong></span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if response %}
+                <div class="result-block assistant-response">
+                    <h3><strong>Assistant Response:</strong></h3>
+                    <div class="response-text">
+                        {{ response | replace('\n', '<br>') | safe }}
+                    </div>
+                </div>
+                {% endif %}
+
+            </section>
+            {% endif %}
+        </main>
+        
+        <footer>
+            <p>Internal General Use | Enterprise GenAI Training Foundation</p>
+        </footer>
+    </div>
+</body>
+</html>
